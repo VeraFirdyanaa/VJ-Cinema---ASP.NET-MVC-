@@ -29,14 +29,14 @@ namespace VJCinema.Controllers
 		// GET: Customer
 		public ActionResult Index()
 		{
-			var customers = _context.Movie.Include(c => c.MembershipType).ToList();
+			var customers = _context.Customers.Include(c => c.MembershipType).ToList();
 			return View(customers);
 		}
 
 		//untuk aksi detail
 		public ActionResult Details(int id)
 		{
-			var customer = _context.Movie.SingleOrDefault(c => c.idCustomer == id);
+			var customer = _context.Customers.SingleOrDefault(c => c.idCustomer == id);
 			if (customer == null)
 				return HttpNotFound();
 			return View(customer);
@@ -47,11 +47,11 @@ namespace VJCinema.Controllers
 		{
 			if(customer.idCustomer == 0)
 			{
-				_context.Movie.Add(customer);
+				_context.Customers.Add(customer);
 			}
 			else
 			{
-				var customerInDb = _context.Movie.Single(c => c.idCustomer == customer.idCustomer);
+				var customerInDb = _context.Customers.Single(c => c.idCustomer == customer.idCustomer);
 				customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
 				customerInDb.nameCustomer = customer.nameCustomer;
 				customerInDb.MembershipTypeId = customer.MembershipTypeId;
