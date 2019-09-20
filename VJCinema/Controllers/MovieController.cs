@@ -10,6 +10,18 @@ namespace VJCinema.Controllers
 {
 	public class MovieController : Controller
 	{
+
+		private VJCinemaDbContext _context;
+
+		public MovieController()
+		{
+			_context = new VJCinemaDbContext();
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			_context.Dispose();
+		}
 		// GET: Movie
 		public ActionResult Random()
 		{
@@ -32,6 +44,24 @@ namespace VJCinema.Controllers
 		public ActionResult Edit(int id)
 		{
 			return Content("id=" + id);
+		}
+
+		[HttpPost]
+		public ActionResult Save(Movie movie)
+		{
+			if (movie.idMovie == 0)
+			{
+				_context.Movies.Add(movie);
+			}
+			else
+			{
+				var customerInDb = _context.Movies.Single(c => c.idMovie == movie.idMovie);
+				customerInDb.idMovie = movie.idMovie;
+				customerInDb.nameMovie = movie.nameMovie;
+			}
+
+			_context.SaveChanges();
+			return View("Index", "Movie");
 		}
 	}
 }
