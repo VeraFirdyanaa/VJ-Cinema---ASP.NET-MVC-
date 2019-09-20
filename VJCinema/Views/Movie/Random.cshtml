@@ -1,0 +1,24 @@
+﻿@model VJCinema.ViewModel.RandomMovieViewModel
+@* Jika langsung di ambil menggunakan model menggunakan code di bawah ini *@
+@*@model Bioskop.Models.Movie*@
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Movie.nameMovie</h2>
+
+@if (Model.Customers.Count == 0)
+{
+    <text>No one has rented this Movie before</text>
+} else
+{
+
+}
+
+<ul>
+    @foreach (var customer in Model.Customers)
+    {
+        <li>@customer.nameCustomer</li>
+    }
+</ul>
