@@ -21,6 +21,11 @@ namespace VJCinema.Controllers
 		{
 			_context.Dispose();
 		}
+
+		public ActionResult New()
+		{
+			return View();
+		}
 		// GET: Customer
 		public ActionResult Index()
 		{
@@ -36,10 +41,5 @@ namespace VJCinema.Controllers
 				return HttpNotFound();
 			return View(customer);
 		}
-
-		//private IEnumerable<Customer> GetCustomers()
-		//{
-		//	return new List<Customer>
-		//}
 	}
 }
