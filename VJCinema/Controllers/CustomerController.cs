@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VJCinema.Models;
+using VJCinema.ViewModel;
 
 namespace VJCinema.Controllers
 {
@@ -24,7 +25,12 @@ namespace VJCinema.Controllers
 
 		public ActionResult New()
 		{
-			return View();
+			var membershipTypes = _context.MembershipTypes.ToList();
+			var viewModel = new NewCustomerViewModel
+			{
+				MembershipTypes = membershipTypes
+			};
+			return View(viewModel);
 		}
 		// GET: Customer
 		public ActionResult Index()
@@ -45,6 +51,10 @@ namespace VJCinema.Controllers
 		[HttpPost]
 		public ActionResult Save(Customer customer)
 		{
+			if (!ModelState.IsValid)
+			{
+				return View("CustomerForm");
+			}
 			if(customer.idCustomer == 0)
 			{
 				_context.Customers.Add(customer);

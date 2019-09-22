@@ -12,7 +12,9 @@ namespace VJCinema.Models
 		[Required]
 		[StringLength(255)]
 		public string nameCustomer { get; set; }
+
 		public bool IsSubscribedToNewsletter { get; set; }
+		 
 		public MembershipType MembershipType { get; set; }
 
 		[Display(Name ="Membership Type")]
