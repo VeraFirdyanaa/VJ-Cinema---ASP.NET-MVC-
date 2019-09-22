@@ -61,7 +61,7 @@ namespace VJCinema.Controllers
 			}
 
 			_context.SaveChanges();
-			return View("Index", "Movie");
+			return RedirectToAction("Index", "Movie");
 		}
 	}
 }

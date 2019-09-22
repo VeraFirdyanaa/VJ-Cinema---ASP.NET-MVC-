@@ -26,12 +26,37 @@ namespace VJCinema.Controllers
 		public ActionResult New()
 		{
 			var membershipTypes = _context.MembershipTypes.ToList();
-			var viewModel = new NewCustomerViewModel
+			var viewModel = new CustomerFormViewModel
 			{
 				MembershipTypes = membershipTypes
 			};
-			return View(viewModel);
+			return View("CustomerForm", viewModel);
 		}
+
+		[HttpPost]
+		public ActionResult Save(Customer customer)
+		{
+			if (customer.idCustomer == 0)
+			_context.Customers.Add(customer);
+			else
+			{
+				var customerInDb = _context.Customers.Single(c => c.idCustomer == customer.idCustomer);
+
+				//TryUpdateModel(customerInDb, "", new string[] { "Name", "Email"});
+
+				// Mapper.Map(customer, customerInDb); 
+
+				//mengatur masing2 property , bisa juga dengan menggunakan AutoMapper
+				customerInDb.nameCustomer = customer.nameCustomer;
+				customerInDb.Birthdate = customer.Birthdate;
+				customerInDb.MembershipTypeId = customer.MembershipTypeId;
+				customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+			}
+			_context.SaveChanges();
+
+			return RedirectToAction("Index", "Customers"); 
+		}
+
 		// GET: Customer
 		public ActionResult Index()
 		{
@@ -48,28 +73,19 @@ namespace VJCinema.Controllers
 			return View(customer);
 		}
 
-		[HttpPost]
-		public ActionResult Save(Customer customer)
+		public ActionResult Edit(int id)
 		{
-			if (!ModelState.IsValid)
-			{
-				return View("CustomerForm");
-			}
-			if(customer.idCustomer == 0)
-			{
-				_context.Customers.Add(customer);
-			}
-			else
-			{
-				var customerInDb = _context.Customers.Single(c => c.idCustomer == customer.idCustomer);
-				customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
-				customerInDb.nameCustomer = customer.nameCustomer;
-				customerInDb.MembershipTypeId = customer.MembershipTypeId;
-				customerInDb.Birthdate = customer.Birthdate;
-			}
+			var customer = _context.Customers.SingleOrDefault(c => c.idCustomer == id);
 
-			_context.SaveChanges();
-			return View("Index", "Customer");
+			if (customer == null)
+				return HttpNotFound();
+
+			var viewModel = new CustomerFormViewModel
+			{
+				Customer = customer,
+				MembershipTypes = _context.MembershipTypes.ToList()
+			};
+			return View("CustomerForm");
 		}
 	}
 }
