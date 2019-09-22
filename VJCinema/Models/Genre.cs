@@ -8,7 +8,7 @@ namespace VJCinema.Controllers
 {
 	public class Genre
 	{
-		public int idGenre { get; set; }
+		public int IdGenre { get; set; }
 
 		[Required]
 		[StringLength(255)]

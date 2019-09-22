@@ -35,22 +35,44 @@ namespace VJCinema.Controllers
 
 			var viewModel = new RandomMovieViewModel
 			{
-				Movie = movie,
 				Customers = customers
-
 			};
 			return View(viewModel);
 		}
+
 		public ActionResult Edit(int id)
 		{
-			return Content("id=" + id);
+			//return Content("id=" + id);
+
+			var movie = _context.Movies.SingleOrDefault(c => c.idMovie == id);
+
+			if (movie == null)
+				return HttpNotFound();
+
+			var viewModel = new MovieFormViewModel (movie)
+			{
+				Genres = _context.Genres.ToList()
+			};
+
+			return View("Movie Form", viewModel);
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Save(Movie movie)
 		{
+			if (!ModelState.IsValid)
+			{
+				var viewModel = new MovieFormViewModel(movie)
+				{
+					Genres = _context.Genres.ToList()
+				};
+				return View("MovieForm", viewModel);
+			}
+			 
 			if (movie.idMovie == 0)
 			{
+				movie.DateAdded = DateTime.Now;
 				_context.Movies.Add(movie);
 			}
 			else
@@ -63,5 +85,7 @@ namespace VJCinema.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("Index", "Movie");
 		}
+
+
 	}
 }
