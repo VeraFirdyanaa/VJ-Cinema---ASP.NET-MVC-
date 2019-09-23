@@ -11,11 +11,11 @@ namespace VJCinema.Controllers
 	public class MovieController : Controller
 	{
 
-		private VJCinemaDbContext _context;
+		private ApplicationDbContext _context;
 
 		public MovieController()
 		{
-			_context = new VJCinemaDbContext();
+			_context = new ApplicationDbContext();
 		}
 
 		protected override void Dispose(bool disposing)
@@ -37,6 +37,23 @@ namespace VJCinema.Controllers
 			var viewModel = new MovieFormViewModel
 			{
 				Genres = genres
+			};
+
+			return View("MovieForm", viewModel);
+		}
+
+		public ActionResult Edit(int id)
+		{
+			//return Content("id=" + id);
+
+			var movie = _context.Movies.SingleOrDefault(c => c.idMovie == id);
+
+			if (movie == null)
+				return HttpNotFound();
+
+			var viewModel = new MovieFormViewModel(movie)
+			{
+				Genres = _context.Genres.ToList()
 			};
 
 			return View("MovieForm", viewModel);
@@ -71,23 +88,6 @@ namespace VJCinema.Controllers
 			return View(viewModel);
 		}
 
-		public ActionResult Edit(int id)
-		{
-			//return Content("id=" + id);
-
-			var movie = _context.Movies.SingleOrDefault(c => c.idMovie == id);
-
-			if (movie == null)
-				return HttpNotFound();
-
-			var viewModel = new MovieFormViewModel (movie)
-			{
-				Genres = _context.Genres.ToList()
-			};
-
-			return View("Movie Form", viewModel);
-		}
-
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Save(Movie movie)
@@ -108,18 +108,15 @@ namespace VJCinema.Controllers
 			}
 			else
 			{
-				var movieInDb = _context.Movies.Single(c => c.idMovie == movie.idMovie);
+				var movieInDb = _context.Movies.Single(m => m.idMovie == movie.idMovie);
 				movieInDb.nameMovie = movie.nameMovie;
 				movieInDb.idGenre = movie.idGenre;
 				movieInDb.ReleaseDate = movie.ReleaseDate;
 				movieInDb.NumberInStock = movie.NumberInStock;
 
 			}
-
 			_context.SaveChanges();
 			return RedirectToAction("Index", "Movie");
 		}
-
-
 	}
 }

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ namespace VJCinema.App_Start
 			//Domain to Dto
 			Mapper.CreateMap<Customer, CustomerDto>();
 			Mapper.CreateMap<Movie, MovieDto>();
+			Mapper.CreateMap<MembershipType, MembershipTypeDto>();
 
 			//Dto to Domain
 			Mapper.CreateMap<CustomerDto, Customer>()
