@@ -37,7 +37,7 @@ namespace VJCinema.Controllers.Api
 
 		//GET/api/customers/1
 		[HttpGet]
-		public IHttpActionResult CreateCustomer(int id)
+		public IHttpActionResult GetCustomer(int id)
 		//sebelum menggunakan IHttpActionResult 
 		//public CustomerDto GetCustomer(int id)
 		{
@@ -87,7 +87,6 @@ namespace VJCinema.Controllers.Api
 
 			//sebelum menggunakan Auto Mapper
 			var customerInDb = _context.Customers.SingleOrDefault(c => c.idCustomer == id);
-
 
 			if (customerInDb == null)
 				//sebelum menggunakan IHttpActionResult
