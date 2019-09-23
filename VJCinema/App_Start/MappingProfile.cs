@@ -12,8 +12,16 @@ namespace VJCinema.App_Start
 	{
 		public MappingProfile()
 		{
+			//Domain to Dto
 			Mapper.CreateMap<Customer, CustomerDto>();
-			Mapper.CreateMap<CustomerDto, Customer>();
+			Mapper.CreateMap<Movie, MovieDto>();
+
+			//Dto to Domain
+			Mapper.CreateMap<CustomerDto, Customer>()
+				.ForMember(m => m.idCustomer, opt => opt.Ignore());
+
+			Mapper.CreateMap<MovieDto, Movie>()
+				.ForMember(m => m.idMovie, opt => opt.Ignore());
 		}
 	}
 }
