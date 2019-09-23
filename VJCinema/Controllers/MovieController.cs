@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using VJCinema.Models;
 using VJCinema.ViewModel;
@@ -22,6 +22,36 @@ namespace VJCinema.Controllers
 		{
 			_context.Dispose();
 		}
+
+		public ViewResult Index()
+		{
+			var movies = _context.Movies.Include(m => m.Genre).ToList();
+
+			return View(movies);
+		}
+
+		public ViewResult New()
+		{
+			var genres = _context.Genres.ToList();
+
+			var viewModel = new MovieFormViewModel
+			{
+				Genres = genres
+			};
+
+			return View("MovieForm", viewModel);
+		}
+
+		public ActionResult Details(int id)
+		{
+			var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.idGenre == id);
+
+			if (movie == null)
+				return HttpNotFound();
+
+			return View(movie);
+		}
+
 		// GET: Movie
 		public ActionResult Random()
 		{
@@ -35,6 +65,7 @@ namespace VJCinema.Controllers
 
 			var viewModel = new RandomMovieViewModel
 			{
+				Movie = movie,
 				Customers = customers
 			};
 			return View(viewModel);
@@ -77,9 +108,12 @@ namespace VJCinema.Controllers
 			}
 			else
 			{
-				var customerInDb = _context.Movies.Single(c => c.idMovie == movie.idMovie);
-				customerInDb.idMovie = movie.idMovie;
-				customerInDb.nameMovie = movie.nameMovie;
+				var movieInDb = _context.Movies.Single(c => c.idMovie == movie.idMovie);
+				movieInDb.nameMovie = movie.nameMovie;
+				movieInDb.idGenre = movie.idGenre;
+				movieInDb.ReleaseDate = movie.ReleaseDate;
+				movieInDb.NumberInStock = movie.NumberInStock;
+
 			}
 
 			_context.SaveChanges();

@@ -65,7 +65,7 @@ namespace VJCinema.ViewModel
 			nameMovie = movie.nameMovie;
 			ReleaseDate = movie.ReleaseDate;
 			NumberInStock = movie.NumberInStock;
-			GendreId = movie.IdGenre;
+			GendreId = movie.idGenre;
 		}
 	}
 }

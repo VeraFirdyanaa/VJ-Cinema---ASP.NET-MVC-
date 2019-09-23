@@ -21,23 +21,23 @@ namespace VJCinema.Controllers.Api
 
 		//GET/ api/customers
 		[HttpGet]
-		//public IHttpActionResult GetCustomers<CustomerDto> (string query = null)
-		public IEnumerable<CustomerDto> GetCustomers()
+		public IHttpActionResult GetCustomers()
+		//public IEnumerable<CustomerDto> GetCustomers()
 		{
 			//var customersQuery = _context.Customers.Include(c => c.MembershipType);
 
 			//if (!String.IsNullOrWhiteSpace(query))
 			//	customersQuery = customersQuery.Where(c => c.nameCustomer.Contains(query));
 
-			//var customerDtos = customersQuery.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+			var customerDtos = _context.Customers.ToList().Select(Mapper.Map< Customer, CustomerDto >);
 
-			//return Ok(customerDtos);
-			return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+			return Ok(customerDtos);
+			//return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
 		}
 
 		//GET/api/customers/1
 		[HttpGet]
-		public IHttpActionResult GetCustomer(int id)
+		public IHttpActionResult CreateCustomer(int id)
 		//sebelum menggunakan IHttpActionResult 
 		//public CustomerDto GetCustomer(int id)
 		{

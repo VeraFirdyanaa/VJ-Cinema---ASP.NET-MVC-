@@ -1,1 +1,16 @@
-﻿
+﻿@model VJCinema.Models.Customer
+
+@{
+    ViewBag.Title = Model.nameCustomer;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.nameCustomer</h2>
+
+<ul>
+    <li>Membership Type: @Model.MembershipType.nameMember</li>
+    @if (Model.Birthdate.HasValue)
+    {
+        <li>Birthdate: @Model.Birthdate.Value.ToShortDateString()</li>
+    }
+</ul>

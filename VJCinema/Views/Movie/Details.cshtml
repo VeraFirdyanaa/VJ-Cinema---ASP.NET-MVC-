@@ -1,0 +1,15 @@
+﻿@model VJCinema.Models.Movie
+
+@{
+    ViewBag.Tittle = Model.nameMovie;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.nameMovie</h2>
+
+<ul>
+    <li>Genre: @Model.Genre.nameGenre</li>
+    <li>Release Date: @Model.ReleaseDate.ToLongDateString()</li>
+    <li>Data Added: @Model.DateAdded.ToLongDateString()</li>
+    <li>Number in Stock: @Model.NumberInStock</li>
+</ul>

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace VJCinema.Controllers
 {
+	[Table("tblGenre")]
 	public class Genre
 	{
-		public int IdGenre { get; set; }
+		[Key]
+		public int idGenre { get; set; }
 
 		[Required]
 		[StringLength(255)]

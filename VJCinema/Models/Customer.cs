@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace VJCinema.Models
 {
+	[Table("tblCustomer")]
 	public class Customer
 	{
+		[Key]
 		public int idCustomer { get; set; }
 
 		[Required(ErrorMessage = "Please enter customer's name.")]

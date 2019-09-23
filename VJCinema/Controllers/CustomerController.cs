@@ -98,7 +98,7 @@ namespace VJCinema.Controllers
 				Customer = customer,
 				MembershipTypes = _context.MembershipTypes.ToList()
 			};
-			return View("CustomerForm");
+			return View("CustomerForm", viewModel);
 		}
 	}
 }

@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace VJCinema.Models
 {
+	[Table("tblMembership")]
 	public class MembershipType
 	{
+		[Key]
 		public byte idMembershipType  { get; set; }
 		[Required]
 		public string nameMember { get; set; }
