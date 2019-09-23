@@ -17,8 +17,6 @@ namespace VJCinema.ViewModel
 		[StringLength(255)]
 		public string nameMovie { get; set; }
 
-		public Genre Genre { get; set; }
-
 		[Display(Name = "Gendre")]
 		[Required]
 		public byte? GendreId { get; set; }
@@ -33,10 +31,6 @@ namespace VJCinema.ViewModel
 		[Range(1, 20)]
 		[Required]
 		public byte NumberInStock { get; set; }
-
-		public byte NumberAvailable { get; set; }
-
-		//public Movie Movie { get; set; }
 
 		public string Title
 		{
