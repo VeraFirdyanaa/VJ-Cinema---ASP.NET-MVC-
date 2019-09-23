@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using VJCinema.Dtos;
 using VJCinema.Models;
@@ -12,11 +10,11 @@ namespace VJCinema.Controllers.Api
 {
     public class MoviesController : ApiController
     {
-		private VJCinemaDbContext _context;
+		private ApplicationDbContext _context;
 
 		public MoviesController()
 		{
-			_context = new VJCinemaDbContext();
+			_context = new ApplicationDbContext();
 		}
 
 		public IEnumerable<MovieDto> GetMovies ()

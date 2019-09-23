@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity; 
+﻿using System.Data.Entity; 
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using VJCinema.Models;
 using VJCinema.ViewModel;
@@ -11,12 +8,12 @@ namespace VJCinema.Controllers
 {
 	public class CustomerController : Controller
 	{
-		private VJCinemaDbContext _context;
+		private ApplicationDbContext _context;
 
 		//GET/api/customer
 		public CustomerController()
 		{
-			_context = new VJCinemaDbContext();
+			_context = new ApplicationDbContext();
 		}
 
 		//GET/api/customer/1
@@ -47,10 +44,10 @@ namespace VJCinema.Controllers
 					Customer = customer,
 					MembershipTypes = _context.MembershipTypes.ToList()
 				};
-				return View("Customer Form", viewModel);
+				return View("CustomerForm", viewModel);
 			}
 			if (customer.idCustomer == 0)
-			_context.Customers.Add(customer);
+				_context.Customers.Add(customer);
 			else
 			{
 				var customerInDb = _context.Customers.Single(c => c.idCustomer == customer.idCustomer);
@@ -71,7 +68,7 @@ namespace VJCinema.Controllers
 		}
 
 		// GET: Customer
-		public ActionResult Index()
+		public ViewResult Index()
 		{
 			var customers = _context.Customers.Include(c => c.MembershipType).ToList();
 			return View(customers);
@@ -80,7 +77,7 @@ namespace VJCinema.Controllers
 		//untuk aksi detail
 		public ActionResult Details(int id)
 		{
-			var customer = _context.Customers.SingleOrDefault(c => c.idCustomer == id);
+			var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(c => c.idCustomer == id);
 			if (customer == null)
 				return HttpNotFound();
 			return View(customer);
