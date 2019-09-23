@@ -68,10 +68,10 @@ namespace VJCinema.Controllers
 		}
 
 		// GET: Customer
-		public ViewResult Index()
+		public ViewResult  Index()
 		{
-			var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-			return View(customers);
+			//var customers = _context.Customers.Include(c => c.MembershipType).ToList();
+			return View();
 		}
 
 		//untuk aksi detail
