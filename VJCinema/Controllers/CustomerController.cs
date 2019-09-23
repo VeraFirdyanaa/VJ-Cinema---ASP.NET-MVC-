@@ -13,11 +13,13 @@ namespace VJCinema.Controllers
 	{
 		private VJCinemaDbContext _context;
 
+		//GET/api/customer
 		public CustomerController()
 		{
 			_context = new VJCinemaDbContext();
 		}
 
+		//GET/api/customer/1
 		protected override void Dispose(bool disposing)
 		{
 			_context.Dispose();

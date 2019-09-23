@@ -9,6 +9,10 @@ namespace VJCinema.Models
 {
 	public class VJCinemaDbContext : DbContext
 	{
+		public VJCinemaDbContext() : base("Name : DefaultConnection")
+		{
+
+		}
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Movie> Movies { get; set; }
 		public DbSet<MembershipType> MembershipTypes { get; set; }
